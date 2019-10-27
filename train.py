@@ -83,7 +83,7 @@ def train(cfg, writer, logger):
 
     model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
     model.apply(weights_init)
-    pretrained_path='hardnet_petite_base.pth'
+    pretrained_path='weights/hardnet_petite_base.pth'
     weights = torch.load(pretrained_path)
     model.module.base.load_state_dict(weights)
 

@@ -1,0 +1,4 @@
+[submodule "pytorch_bn_fusion"]
+	path = pytorch_bn_fusion
+	url = https://github.com/MIPT-Oulu/pytorch_bn_fusion.git
+	branch = master

@@ -1,0 +1,34 @@
+model:
+    arch: hardnet
+data:
+    dataset: cityscapes
+    train_split: train
+    val_split: val
+    img_rows: 1024
+    img_cols: 1024
+    path: /mnt/ssd2/Cityscapes/
+    sbd_path: /mnt/ssd2/Cityscapes/
+training:
+    train_iters: 90000
+    batch_size: 16
+    val_interval: 500
+    n_workers: 8
+    print_interval: 10
+    augmentations:
+        hflip: 0.5
+        rscale_crop: [1024, 1024]
+    optimizer:
+        name: 'sgd'
+        lr: 0.02
+        weight_decay: 0.0005
+        momentum: 0.9
+    loss:
+        name: 'bootstrapped_cross_entropy'
+        min_K: 4096
+        loss_th: 0.3
+        size_average: True
+    lr_schedule: 
+        name: 'poly_lr'
+        max_iter: 90000
+    resume: None
+    finetune: None    

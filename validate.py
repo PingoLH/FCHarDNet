@@ -49,10 +49,9 @@ def validate(cfg, args):
     state = convert_state_dict(torch.load(args.model_path)["model_state"])
     model.load_state_dict(state)
     
-    model = fuse_bn_recursively(model)
-    print(model)
-    total_params = sum(p.numel() for p in model.parameters())
-    print('Parameters: ', total_params )
+    if args.bn_fusion:
+      model = fuse_bn_recursively(model)
+      print(model)
     
     if args.update_bn:
       print("Reset BatchNorm and recalculate mean/var")
@@ -62,6 +61,9 @@ def validate(cfg, args):
       model.eval()
     model.to(device)
     total_time = 0
+    
+    total_params = sum(p.numel() for p in model.parameters())
+    print('Parameters: ', total_params )
     
     #stat(model, (3, 1024, 2048))
     torch.backends.cudnn.benchmark=True
@@ -174,14 +176,13 @@ if __name__ == "__main__":
         dest="eval_flip",
         action="store_true",
         help="Enable evaluation with flipped image |\
-                              True by default",
+                              False by default",
     )
     parser.add_argument(
         "--no-eval_flip",
         dest="eval_flip",
         action="store_false",
-        help="Disable evaluation with flipped image |\
-                              True by default",
+        help="Disable evaluation with flipped image",
     )
     parser.set_defaults(eval_flip=False)
 
@@ -196,8 +197,7 @@ if __name__ == "__main__":
         "--no-measure_time",
         dest="measure_time",
         action="store_false",
-        help="Disable evaluation with time (fps) measurement |\
-                              True by default",
+        help="Disable evaluation with time (fps) measurement",
     )
     parser.set_defaults(measure_time=True)
 
@@ -218,6 +218,15 @@ if __name__ == "__main__":
               False by default",
     )
     parser.set_defaults(update_bn=False)
+    
+    parser.add_argument(
+        "--no-bn_fusion",
+        dest="bn_fusion",
+        action="store_false",
+        help="Disable performing batch norm fusion with convolutional layers |\
+              bn_fusion is enabled by default",
+    )
+    parser.set_defaults(bn_fusion=True)   
 
     args = parser.parse_args()
 

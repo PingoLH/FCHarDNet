@@ -1,6 +1,6 @@
 # FCHarDNet
 ### Fully Convolutional HarDNet for Segmentation in Pytorch
-### [Harmonic DenseNet: A low memory traffic network (ICCV 2019)]((https://arxiv.org/abs/1909.00948)
+### [Harmonic DenseNet: A low memory traffic network (ICCV 2019)](https://arxiv.org/abs/1909.00948)
 ### Refer to [Pytorch-HarDNet](https://github.com/PingoLH/Pytorch-HarDNet) for more information
 
 #### This repo was forked from [meetshah1995/pytorch-semseg](https://github.com/meetshah1995/pytorch-semseg)

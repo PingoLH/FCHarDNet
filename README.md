@@ -24,7 +24,7 @@
 
 | Method | #Param (M) | GMac (GFLOPs) | Cityscapes mIoU  | fps on Titan-V @1024x2048 |
 | :---: |  :---:  |  :---:  | :---:  | :---:  | 
-| ICNet  | 7.7  | 30.7  | 69 |  63  |
+| ICNet  | 7.7  | 30.7  | 69.5 |  63  |
 | BiSeNet | 13.4  | 119 | 74.7 | 36 |
 | FC-HarDNet-70  |  4.1  | 35.4 | 75.9 | 67 |
 

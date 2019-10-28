@@ -1,13 +1,34 @@
 # FCHarDNet
 ### Fully Convolutional HarDNet for Segmentation in Pytorch
-### [Harmonic DenseNet: A low memory traffic network (ICCV 2019)](https://arxiv.org/abs/1909.00948)
-### Refer to [Pytorch-HarDNet](https://github.com/PingoLH/Pytorch-HarDNet) for more information
+* Implementaion based on [Harmonic DenseNet: A low memory traffic network (ICCV 2019)](https://arxiv.org/abs/1909.00948)
+* Refer to [Pytorch-HarDNet](https://github.com/PingoLH/Pytorch-HarDNet) for more information about the backbone model
+* This repo was forked from [meetshah1995/pytorch-semseg](https://github.com/meetshah1995/pytorch-semseg)
 
-#### This repo was forked from [meetshah1995/pytorch-semseg](https://github.com/meetshah1995/pytorch-semseg)
+
+### Architecture
+* Simple U-shaped encoder-decoder structure
+* Conv3x3/Conv1x1 only (including the first layer)
+* No self-attention layer or Pyramid Pooling  
+
 
 <p align="center">
-  <img src="pic/fchardnet70_arch.png" width="512" title="FC-HarDNet-70 Architecture">
+  <img src="pic/fchardnet70_arch.png" width="540" title="FC-HarDNet-70 Architecture">
 </p>
+
+
+### Results  
+  
+<p align="center">
+  <img src="pic/fchardnet70_cityscapes.png" width="420" title="FC-HarDNet-70 Architecture">
+</p>  
+
+| Method | #Param (M) | GMac (GFLOPs) | Cityscapes mIoU  | fps on Titan-V @1024x2048 |
+| :---: |  :---:  |  :---:  | :---:  | :---:  | 
+| ICNet  | 7.7  | 30.7  | 69 |  63  |
+| BiSeNet | 13.4  | 119 | 74.7 | 36 |
+| FC-HarDNet-70  |  4.1  | 35.4 | 75.9 | 67 |
+
+---------------------
 
 ### DataLoaders implemented
 
@@ -55,4 +76,10 @@ usage: validate.py [-h] [--config [CONFIG]] [--model_path [MODEL_PATH]] [--save_
   --save_image          Enable writing result images to out_rgb (pred label blended images) and out_predID
 
 ```
+
+### Pretrained Weights
+* Cityscapes pretrained weights: [Download](https://ping-chao.com/hardnet/hardnet70_cityscapes_model.pkl)
+<br> (Val mIoU:  77.7,  Test mIoU: 75.9)
+* HarDNet-Petite weights pretrained by ImageNet: 
+<br> included in [weights/hardnet_petite_base.pth](https://github.com/PingoLH/FCHarDNet/tree/master/weights)
 

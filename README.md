@@ -19,7 +19,7 @@
 ### Results  
   
 <p align="center">
-  <img src="pic/fchardnet70_cityscapes.png" width="420" title="FC-HarDNet-70 Architecture">
+  <img src="pic/fchardnet70_cityscapes.png" width="420" title="Cityscapes">
 </p>  
 
 | Method | #Param (M) | GMac (GFLOPs) | Cityscapes mIoU  | fps on Titan-V @1024x2048 |
@@ -83,3 +83,14 @@ usage: validate.py [-h] [--config [CONFIG]] [--model_path [MODEL_PATH]] [--save_
 * HarDNet-Petite weights pretrained by ImageNet: 
 <br> included in [weights/hardnet_petite_base.pth](https://github.com/PingoLH/FCHarDNet/tree/master/weights)
 
+
+### Prediction Samples
+<p align="center">
+  <img src="pic/sample01.jpg" width="800">
+</p>
+<p align="center">
+  <img src="pic/sample02.jpg" width="800">
+</p>
+<p align="center">
+  <img src="pic/sample03.jpg" width="800">
+</p>

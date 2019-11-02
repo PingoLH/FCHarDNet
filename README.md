@@ -22,12 +22,15 @@
   <img src="pic/fchardnet70_cityscapes.png" width="420" title="Cityscapes">
 </p>  
 
-| Method | #Param (M) | GMac (GFLOPs) | Cityscapes mIoU  | fps on Titan-V @1024x2048 |
-| :---: |  :---:  |  :---:  | :---:  | :---:  | 
-| ICNet  | 7.7  | 30.7  | 69.5 |  63  |
-| BiSeNet | 13.4  | 119 | 74.7 | 36 |
-| FC-HarDNet-70  |  4.1  | 35.4 | 75.9 | 70 |
+| Method | #Param <br>(M) | GMACs /<br> GFLOPs | Cityscapes <br> mIoU  | fps on Titan-V <br>@1024x2048 | fps on 1080ti <br>@1024x2048 |
+| :---: |  :---:  |  :---:  | :---:  | :---:  |  :---:  | 
+| ICNet  | 7.7  | 30.7  | 69.5 |  63  | 48 | 
+| SwiftNetRN-18 | 11.8 | 104 | 75.5 | - | 39.9 | 
+| BiSeNet (1024x2048) | 13.4  | 119 | 77.7 | 36 | 27 | 
+| BiSeNet (768x1536)  | 13.4  | 66.8 | 74.7 | 72** | 54** | 
+| **FC-HarDNet-70**  |  **4.1**  | **35.4** | **76.0** | **70** | **53** |
 
+- ** Speed tested in 1536x768 instead of full resolution.
 ---------------------
 
 ### DataLoaders implemented
@@ -80,6 +83,8 @@ usage: validate.py [-h] [--config [CONFIG]] [--model_path [MODEL_PATH]] [--save_
 ### Pretrained Weights
 * Cityscapes pretrained weights: [Download](https://ping-chao.com/hardnet/hardnet70_cityscapes_model.pkl)
 <br> (Val mIoU:  77.7,  Test mIoU: 75.9)
+* Cityscapes pretrained with color jitter augmentation: [Download](https://ping-chao.com/hardnet/hardnet70_cityscapes_model_2.pkl)
+<br> (Val mIoU:  77.4,  Test mIoU: 76.0)
 * HarDNet-Petite weights pretrained by ImageNet: 
 <br> included in [weights/hardnet_petite_base.pth](https://github.com/PingoLH/FCHarDNet/tree/master/weights)
 

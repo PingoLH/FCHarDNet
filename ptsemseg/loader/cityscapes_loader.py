@@ -1,8 +1,8 @@
 import os
 import torch
 import numpy as np
-import scipy.misc as m
 
+from PIL import Image
 from torch.utils import data
 
 from ptsemseg.utils import recursive_glob
@@ -83,7 +83,7 @@ class cityscapesLoader(data.Dataset):
         self.annotations_base = os.path.join(self.root, "gtFine", self.split)
 
         self.files[split] = recursive_glob(rootdir=self.images_base, suffix=".png")
-        
+
         self.void_classes = [0, 1, 2, 3, 4, 5, 6, 9, 10, 14, 15, 16, 18, 29, 30, -1]
         self.valid_classes = [
             7,
@@ -106,7 +106,7 @@ class cityscapesLoader(data.Dataset):
             32,
             33,
         ]
-        
+
         #self.void_classes = [ 255]
         #self.valid_classes = [i for i in range(19)]
         self.class_names = [
@@ -157,18 +157,18 @@ class cityscapesLoader(data.Dataset):
         )
         name = img_path.split(os.sep)[-1][:-4] + ".png"
 
-        img = m.imread(img_path)
+        img = Image.open(img_path)
         img = np.array(img, dtype=np.uint8)
 
-        lbl = m.imread(lbl_path)
+        lbl = Image.open(lbl_path)
         lbl = self.encode_segmap(np.array(lbl, dtype=np.uint8))
 
         if self.augmentations is not None:
             img, lbl = self.augmentations(img, lbl)
-        
+
         if self.is_transform:
             img, lbl = self.transform(img, lbl)
-        
+
 
         return img, lbl, name
 
@@ -178,25 +178,26 @@ class cityscapesLoader(data.Dataset):
         :param img:
         :param lbl:
         """
-        img = m.imresize(img, (self.img_size[0], self.img_size[1]))  # uint8 with RGB mode
-        img = img[:, :, ::-1]  # RGB -> BGR
+        img = np.array(Image.fromarray(img).resize(
+                (self.img_size[1], self.img_size[0])))  # uint8 with RGB mode
         img = img.astype(np.float64)
 
         value_scale = 255
-        mean = [0.406, 0.456, 0.485] 
+        mean = [0.406, 0.456, 0.485]
         mean = [item * value_scale for item in mean]
         std = [0.225, 0.224, 0.229]
         std = [item * value_scale for item in std]
-        
+
         if self.img_norm:
             img = (img - mean) / std
-            
+
         # NHWC -> NCHW
         img = img.transpose(2, 0, 1)
 
         classes = np.unique(lbl)
         lbl = lbl.astype(float)
-        lbl = m.imresize(lbl, (self.img_size[0], self.img_size[1]), "nearest", mode="F")
+        lbl = np.array(Image.fromarray(lbl).resize(
+                (self.img_size[1], self.img_size[0]), resample=Image.NEAREST))
         lbl = lbl.astype(int)
 
         if not np.all(classes == np.unique(lbl)):
@@ -225,7 +226,7 @@ class cityscapesLoader(data.Dataset):
         rgb[:, :, 1] = g / 255.0
         rgb[:, :, 2] = b / 255.0
         return rgb
-        
+
     def decode_segmap_id(self, temp):
         ids = np.zeros((temp.shape[0], temp.shape[1]),dtype=np.uint8)
         for l in range(0, self.n_classes):

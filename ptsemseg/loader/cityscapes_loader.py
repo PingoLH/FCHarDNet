@@ -180,6 +180,7 @@ class cityscapesLoader(data.Dataset):
         """
         img = np.array(Image.fromarray(img).resize(
                 (self.img_size[1], self.img_size[0])))  # uint8 with RGB mode
+        img = img[:, :, ::-1]  # RGB -> BGR
         img = img.astype(np.float64)
 
         value_scale = 255

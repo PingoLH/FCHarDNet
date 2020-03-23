@@ -51,7 +51,10 @@ def validate(cfg, args):
     
     if args.bn_fusion:
       model = fuse_bn_recursively(model)
-      print(model)
+    
+    #Transform model into v2. Please set trt=True when converting to TensorRT model
+    model.v2_transform(trt=False) 
+    print(model)
     
     if args.update_bn:
       print("Reset BatchNorm and recalculate mean/var")

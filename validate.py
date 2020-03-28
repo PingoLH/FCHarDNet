@@ -115,7 +115,7 @@ def validate(cfg, args):
                     img_input = img_input.transpose(1, 2, 0)
                     blend = img_input * 0.2 + decoded * 0.8
                     fname_new = fname[0]
-                    fname_new += '.jpg'
+                    fname_new = fname_new[:-4]
                     dir = "./out_rgb/"
                     if not os.path.exists(dir):
                       os.mkdir(dir)

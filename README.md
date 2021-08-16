@@ -1,4 +1,18 @@
 # FCHarDNet
+
+### Aug-15-2021 Update
+- Added a new v2_transform() method to replace torch.cat + nn.Conv2d combinations with [CatConv2d](https://github.com/PingoLH/CatConv2d), an all-in-1 fused cuda kernel combining Concat and Conv2d.
+
+- Inference on TitanV speedup from 70 fps to **99 fps**
+- CatConv2d Installation
+~~~
+cd CatConv2d/
+python setup.py install
+~~~
+(Please note that backward path for CatConv2d hasn't been implemented)
+
+<br>
+
 ### Fully Convolutional HarDNet for Segmentation in Pytorch
 * Implementaion based on [Harmonic DenseNet: A low memory traffic network (ICCV 2019)](https://arxiv.org/abs/1909.00948)
 * Refer to [Pytorch-HarDNet](https://github.com/PingoLH/Pytorch-HarDNet) for more information about the backbone model
@@ -29,6 +43,7 @@
 | BiSeNet (1024x2048) | 13.4  | 119 | 77.7 | 36 | 27 | 
 | BiSeNet (768x1536)  | 13.4  | 66.8 | 74.7 | 72** | 54** | 
 | **FC-HarDNet-70**  |  **4.1**  | **35.4** | **76.0** | **70** | **53** |
+| **FC-HarDNet-70 V2 <br />(with [CatConv2d](https://github.com/PingoLH/CatConv2d))**  |  **4.1**  | **35.4** | **76.0** | **99** | **63** |
 
 - ** Speed tested in 1536x768 instead of full resolution.
 ---------------------

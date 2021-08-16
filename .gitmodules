@@ -2,3 +2,7 @@
 	path = pytorch_bn_fusion
 	url = https://github.com/MIPT-Oulu/pytorch_bn_fusion.git
 	branch = master
+[submodule "CatConv2d"]
+	path = CatConv2d
+	url = https://github.com/PingoLH/CatConv2d
+	branch = master

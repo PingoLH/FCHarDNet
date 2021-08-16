@@ -53,7 +53,7 @@ def validate(cfg, args):
       model = fuse_bn_recursively(model)
     
     #Transform model into v2. Please set trt=True when converting to TensorRT model
-    model.v2_transform(trt=False) 
+    model.v2_transform() 
     print(model)
     
     if args.update_bn:
